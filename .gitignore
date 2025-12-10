@@ -1,0 +1,11 @@
+# Archivos de entorno (Claves secretas)
+.env
+
+# Carpetas de entorno virtual (Pesadas e innecesarias en la nube)
+venv/
+.venv/
+env/
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
