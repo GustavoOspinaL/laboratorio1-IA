@@ -1,6 +1,7 @@
 from langchain_core.messages import HumanMessage
 from src.config import DOMAIN
 from src.graph import build_graph
+from src.queries import retrieve_input, save_input
 import uuid
 
 def main():
@@ -20,18 +21,25 @@ def main():
         if user_input.lower() in ["salir", "exit", "quit"]:
             print("Hasta luego.")
             break
-
-        # 3. Estado inicial
-        initial_state = {
-            "messages": [{"role": "user", "content": user_input}],
-            "current_step": "initial",
-            "analysis_results": {}
-        }
-
-        result = app.invoke(initial_state, config=config)
         
-        last_message = result["messages"][-1]["content"]
-        print(f"\nAgente {DOMAIN}: {last_message}")
+        data = retrieve_input(user_input)
+
+        if data and 'response' in data[0]:
+            response = data[0]['response']
+            print(f"\nAgente {DOMAIN}: {response}")
+        else:
+            # 3. Estado inicial
+            initial_state = {
+                "messages": [{"role": "user", "content": user_input}],
+                "current_step": "initial",
+                "analysis_results": {}
+            }
+
+            result = app.invoke(initial_state, config=config)
+            
+            last_message = result["messages"][-1]["content"]
+            save_input(user_input, last_message)
+            print(f"\nAgente {DOMAIN}: {last_message}")
 
 if __name__ == "__main__":
     main()

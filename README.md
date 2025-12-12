@@ -50,13 +50,31 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Configurar Variables de Entorno (API Key)
+### 4. Cear la siguiente base de datos y tabla principal en MySQL
+```plaintext
+CREATE DATABASE `AgentLangGraph` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+CREATE TABLE `inputs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `input` mediumtext,
+  `response` mediumtext,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
+
+### 4. Configurar Variables de Entorno (API Key y datos de BD MySQL)
 Por seguridad, las claves no se incluyen en el código.
 Crea un archivo llamado .env en la raíz del proyecto (al mismo nivel que main.py).
 Agrega tu clave API dentro del archivo con el siguiente formato:
 
 ```plaintext
 GOOGLE_API_KEY=tu_clave_api_aqui_pegada_sin_comillas
+DB_HOST=tu_host_aqui
+DB_USER=tu_usuaio_de_bd_aqui
+DB_PASSWORD=tu_password_aqui
+DB_NAME=nombre_de_tu_bd
+DB_PORT=tu_puerto
 ```
 
 ### 5. Ejecución

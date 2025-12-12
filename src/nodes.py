@@ -7,10 +7,8 @@ from src.llm import get_llm
 llm = get_llm()
 
 def analyze_node(state: AgentState):
-    """Nodo que analiza la entrada usando Gemini"""
     messages = state["messages"]
-    
-    # Construcción del prompt usando el helper
+
     system_content = get_analysis_system_prompt(DOMAIN)
     
     gemini_messages = [
@@ -35,11 +33,9 @@ def analyze_node(state: AgentState):
     }
 
 def respond_node(state: AgentState):
-    """Nodo que genera respuesta final"""
     messages = state["messages"]
     analysis = state["analysis_results"]
     
-    # Guardarail: Si es off-topic, cortamos aquí
     if analysis.get("intent") == "off_topic":
         return {
             "current_step": "response_generated",
